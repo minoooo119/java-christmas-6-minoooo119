@@ -10,6 +10,7 @@ import static View.OutputComment.*;
 public class OutputView {
     private final Integer date;
     public final List<MenuDetail> menuDetailList;
+    private Integer originalTotalPrice;
 
     public OutputView(Integer date, List<MenuDetail> menuDetailList){
         this.date=date;
@@ -52,6 +53,14 @@ public class OutputView {
         for(MenuDetail menuDetail:menuDetailList){
             totalPrice+=menuDetail.price*menuDetail.num;
         }
+        originalTotalPrice=totalPrice;
         return totalPrice;
+    }
+    public void printGift(){
+        if(originalTotalPrice>120000) {
+            System.out.println("샴페인 1개");
+            return;
+        }
+        System.out.println("없음");
     }
 }
