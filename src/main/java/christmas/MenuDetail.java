@@ -1,5 +1,7 @@
 package christmas;
 
+import java.util.Arrays;
+
 public enum MenuDetail {
     TAPAS("타파스", 5500),
     CAESAR_SALAD("시저샐러드", 8000),
@@ -16,8 +18,18 @@ public enum MenuDetail {
     EMPTY("0", 0);
     public final String name;
     public final int price;
+    public int num;
     MenuDetail(String name, int price) {
         this.name = name;
         this.price = price;
+    }
+    public static MenuDetail findByName(String name){
+        return Arrays.stream(MenuDetail.values())
+                .filter(menu -> menu.name.equals(name))
+                .findAny()
+                .orElse(EMPTY);
+    }
+    public void setNum(int num){
+        this.num=num;
     }
 }

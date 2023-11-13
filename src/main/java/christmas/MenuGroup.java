@@ -17,14 +17,14 @@ public enum MenuGroup {
         this.category = category;
         this.menuList = menuList;
     }
-    public static MenuGroup findByMenuList(String pickMenu){
+    public static MenuGroup findByMenuList(MenuDetail pickMenu){
         return Arrays.stream(MenuGroup.values())
-                .filter(menu -> menu.menuList.contains(pickMenu))
+                .filter(menu -> menu.hasPickMenu(pickMenu))
                 .findAny()
                 .orElse(EMPTY);
     }
-    public boolean hasPickMenu(String pickMenu){
+    public boolean hasPickMenu(MenuDetail pickMenu){
         return menuList.stream()
-                .anyMatch(menu -> menu.equals(pickMenu));
+                .anyMatch(menu -> menu==pickMenu);
     }
 }
