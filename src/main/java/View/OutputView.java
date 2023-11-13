@@ -44,4 +44,14 @@ public class OutputView {
             System.out.println(menuDetail.name+" "+menuDetail.num+"개");
         }
     }
+    public void printOriginalTotalPrice(){
+        System.out.printf("%,d원%n",getOriginalTotalPrice());
+    }
+    public Integer getOriginalTotalPrice(){
+        int totalPrice=0;
+        for(MenuDetail menuDetail:menuDetailList){
+            totalPrice+=menuDetail.price*menuDetail.num;
+        }
+        return totalPrice;
+    }
 }
