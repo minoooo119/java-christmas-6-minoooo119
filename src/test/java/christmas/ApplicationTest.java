@@ -11,7 +11,13 @@ import java.util.List;
 
 class ApplicationTest extends NsTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
-
+    @Test
+    void 시작_title_출력(){
+        assertSimpleTest(()->{
+            run("3","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        });
+    }
     @Test
     void 모든_타이틀_출력() {
         assertSimpleTest(() -> {
