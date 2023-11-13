@@ -3,8 +3,11 @@ package christmas;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import View.InputView;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 class ApplicationTest extends NsTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -43,23 +46,33 @@ class ApplicationTest extends NsTest {
 
     @Test
     void 주문_예외_테스트() {
+        assertSimpleTest(()->{
+            InputView inputView=new InputView();
+            inputView.validateMenu("티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            List<MenuDetail> menuDetailList=inputView.getMenuDetailList();
+            assertThat(menuDetailList.size()).isEqualTo(4);
+            assertThat(menuDetailList.get(0).name).isEqualTo("티본스테이크");
+            assertThat(menuDetailList.get(0).num).isEqualTo(1);
+            assertThat(menuDetailList.get(1).name).isEqualTo("바비큐립");
+            assertThat(menuDetailList.get(1).num).isEqualTo(1);
+            assertThat(menuDetailList.get(2).name).isEqualTo("초코케이크");
+            assertThat(menuDetailList.get(2).num).isEqualTo(2);
+            assertThat(menuDetailList.get(3).name).isEqualTo("제로콜라");
+            assertThat(menuDetailList.get(3).num).isEqualTo(1);
+        });
         assertSimpleTest(() -> {
             runException("3", "제로콜라-a");
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         });
-    }
-    @Test
-    void 주문_예외_테스트2(){
-        assertSimpleTest(() -> {
-            runException("3", "제로콜라-1,제로콜라-1");
+        assertSimpleTest(() ->{
+            //연속 overlap 확인
+            runException("3","제로콜라-1,제로콜라-1,제로콜라-1");
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         });
-    }
-    @Test
-    void 주문_예외_테스트3(){
-        assertSimpleTest(() ->{
-           runException("3","제로콜라-1,제로콜라-1,제로콜라-1");
-           assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        assertSimpleTest(() -> {
+            //overlap 확인
+            runException("3", "제로콜라-1,제로콜라-1");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         });
     }
 
@@ -71,7 +84,7 @@ class ApplicationTest extends NsTest {
         });
         assertSimpleTest(() -> {
             runException("sk");
-            assertThat(output()).contains("[ERROR] 숫자만 기입해주세요");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         });
     }
 
