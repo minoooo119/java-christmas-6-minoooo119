@@ -12,10 +12,23 @@ import java.util.List;
 class ApplicationTest extends NsTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     @Test
-    void 시작_title_출력(){
+    void 시작_타이틀_출력(){
         assertSimpleTest(()->{
             run("3","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
             assertThat(output()).contains("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        });
+    }
+    @Test
+    void 할인전_총_금액_확인(){
+        assertSimpleTest(()->{
+            run("3","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
+            int totalPrice=0;
+            InputView inputView=new InputView();
+            inputView.validateMenu("티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
+            for(MenuDetail menuDetail:inputView.getMenuDetailList()){
+                totalPrice+=menuDetail.price*menuDetail.num;
+            }
+            assertThat(output()).contains("<할인 전 총주문 금액>"+LINE_SEPARATOR+String.format("%,d원",totalPrice));
         });
     }
     @Test
@@ -65,6 +78,10 @@ class ApplicationTest extends NsTest {
             assertThat(menuDetailList.get(2).num).isEqualTo(2);
             assertThat(menuDetailList.get(3).name).isEqualTo("제로콜라");
             assertThat(menuDetailList.get(3).num).isEqualTo(1);
+        });
+        assertSimpleTest(() -> {
+            runException("3", "제로콜라-1");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         });
         assertSimpleTest(() -> {
             runException("3", "제로콜라-a");
