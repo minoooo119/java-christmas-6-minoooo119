@@ -48,6 +48,7 @@ public class InputView {
         try {
             validateMenu(menu);
         } catch (IllegalArgumentException e) {
+            menuDetailList.clear();
             readMenu();
         }
     }
@@ -78,26 +79,26 @@ public class InputView {
             menuLength+=menuDetail.num;
         }
         if(menuLength>20){
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            System.out.println("[ERROR1] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             throw new IllegalArgumentException();
         }
     }
     private void validateMenuOverlap(MenuDetail menuDetail){
         if(menuDetailList.contains(menuDetail)){
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            System.out.println("[ERROR2] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             throw new IllegalArgumentException();
         }
     }
     private void validateMenuDetailLength(String[] menuDetailList){
         if(menuDetailList.length!=2){
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            System.out.println("[ERROR3] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             throw new IllegalArgumentException();
         }
     }
     private void validateMenuName(String menuName){
         MenuDetail menuDetail=MenuDetail.findByName(menuName);
         if(menuDetail==MenuDetail.EMPTY){
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            System.out.println("[ERROR4] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             throw new IllegalArgumentException();
         }
     }
@@ -105,11 +106,11 @@ public class InputView {
         try{
             int num=Integer.parseInt(menuNum);
             if(num<1){
-                System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                System.out.println("[ERROR5] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
                 throw new IllegalArgumentException();
             }
         }catch (NumberFormatException e){
-            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            System.out.println("[ERROR6] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             throw new IllegalArgumentException();
         }
     }
