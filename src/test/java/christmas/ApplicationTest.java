@@ -74,6 +74,11 @@ class ApplicationTest extends NsTest {
             runException("3", "제로콜라-1,제로콜라-1");
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         });
+        assertSimpleTest(() -> {
+            //20개 넘는지 확인
+            runException("3", "시저샐러드-3,양송이수프-4,티본스테이크-10,바비큐립-7,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        });
     }
 
     @Test
