@@ -52,6 +52,10 @@ public class InputView {
         for(String menuDetail:menuList){
             try {
                 validateMenuDetail(menuDetail);
+                if(!validateMenuLength(menuDetailList)){
+                    menuDetailList.clear();
+                    return readMenu();
+                }
             }catch (IllegalArgumentException e){
                 return readMenu();
             }
@@ -75,6 +79,17 @@ public class InputView {
         MenuDetail menu=MenuDetail.findByName(menuDetailListStr[0]);
         menu.setNum(Integer.parseInt(menuDetailListStr[1]));
         menuDetailList.add(menu);
+    }
+    private boolean validateMenuLength(List<MenuDetail> menuDetailList){
+        int menuLength=0;
+        for(MenuDetail menuDetail:menuDetailList){
+            menuLength+=menuDetail.num;
+        }
+        if(menuLength>20){
+            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            return false;
+        }
+        return true;
     }
     private boolean validateMenuOverlap(MenuDetail menuDetail){
         if(menuDetailList.contains(menuDetail)){
