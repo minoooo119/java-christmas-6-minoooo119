@@ -11,10 +11,12 @@ public class OutputView {
     private final Integer date;
     public final List<MenuDetail> menuDetailList;
     private Integer originalTotalPrice;
-
     public OutputView(Integer date, List<MenuDetail> menuDetailList){
         this.date=date;
         this.menuDetailList=menuDetailList;
+    }
+    public void printBlankLine(){
+        System.out.println();
     }
     public void printOpeningTitle(){
         System.out.printf((OPENING_TITLE) + "%n", date);
