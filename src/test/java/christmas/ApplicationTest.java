@@ -127,23 +127,23 @@ class ApplicationTest extends NsTest {
     void 날짜_관련_할인_테스트(){
         assertSimpleTest(()->{
             run("5","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
-            assertThat(output()).contains("크리스마스 디데이 할인: 1,400원");
+            assertThat(output()).contains("크리스마스 디데이 할인: -1,400원");
         });
         assertSimpleTest(()->{
             run("5","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
-            assertThat(output()).contains("평일 할인: 4,046원");
+            assertThat(output()).contains("평일 할인: -4,046원");
         });
         assertSimpleTest(()->{
             run("8","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
-            assertThat(output()).contains("주말 할인: 6,069원");
+            assertThat(output()).contains("주말 할인: -6,069원");
         });
         assertSimpleTest(()->{
             run("29","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
-            assertThat(output()).contains("<혜택 내역>" + LINE_SEPARATOR+"주말 할인: 6,069원");
+            assertThat(output()).contains("<혜택 내역>" + LINE_SEPARATOR+"주말 할인: -6,069원");
         });
         assertSimpleTest(()->{
             run("25","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
-            assertThat(output()).contains("특별 할인: 1,000원");
+            assertThat(output()).contains("특별 할인: -1,000원");
         });
         assertSimpleTest(()->{
             run("25","아이스크림-1");
@@ -151,6 +151,33 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 총괄_테스트(){
+        assertSimpleTest(()->{
+            run("3","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!",
+                    "<주문 메뉴>",
+                    "티본스테이크 1개",
+                    "바비큐립 1개",
+                    "초코케이크 2개",
+                    "제로콜라 1개",
+                    "<할인 전 총주문 금액>",
+                    "142,000원",
+                    "<증정 메뉴>",
+                    "샴페인 1개",
+                    "<혜택 내역>",
+                    "크리스마스 디데이 할인: -1,200원",
+                    "평일 할인: -4,046원",
+                    "특별 할인: -1,000원",
+                    "증정 이벤트: -25,000원",
+                    "<총혜택 금액>",
+                    "-31,246원",
+                    "<할인 후 예상 결제 금액>",
+                    "135,754원",
+                    "<12월 이벤트 배지>",
+                    "산타");
+        });
+    }
     @Override
     protected void runMain() {
         Application.main(new String[]{});
