@@ -90,12 +90,8 @@ public class OutputView {
         System.out.println("없음");
     }
 
-    public void printFinalPrice(int totalBenefit, int originalTotalPrice) {
-        if (totalBenefit != 0) {
-            System.out.printf("%,d원%n", originalTotalPrice - totalBenefit);
-            return;
-        }
-        System.out.printf("%,d원%n", originalTotalPrice);
+    public void printFinalPrice(int finalPrice) {
+            System.out.printf("%,d원%n", finalPrice);
     }
 
     public void printDecemberEventBadge(int totalBenefit) {

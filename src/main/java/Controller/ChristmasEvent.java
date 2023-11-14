@@ -56,7 +56,7 @@ public class ChristmasEvent {
     private void showBenefitStep(OutputView outputView, int originalTotalPrice) {
         boolean hasBenefit = setBenefit(date, menuDetailList, originalTotalPrice);
         int total_benefit = benefit.getTotalBenefit();
-        this.price = new Price(originalTotalPrice, total_benefit);
+        this.price = new Price(originalTotalPrice, total_benefit,benefit.getGiftBenefit());
         outputView.printBenefitDetailsTitle();
         outputView.printDiscountDetails(hasBenefit, benefit.getD_dayBenefit(), benefit.getWeekdayBenefit(), benefit.getWeekendBenefit(), benefit.getSpecialStarBenefit(), benefit.getGiftBenefit());
         outputView.printBlankLine();
@@ -92,7 +92,7 @@ public class ChristmasEvent {
     }
     private void showFinalPriceStep(OutputView outputView) {
         outputView.printFinalPriceTitle();
-        outputView.printFinalPrice(price.getFinalPrice(),price.getOriginalTotalPrice());
+        outputView.printFinalPrice(price.getFinalPrice());
         outputView.printBlankLine();
     }
     private void showDecemberEventBadgeStep(OutputView outputView) {
