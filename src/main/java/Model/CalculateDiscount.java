@@ -5,11 +5,9 @@ import christmas.MenuDetail;
 import christmas.MenuGroup;
 import christmas.Week;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class calculateDiscount {
+public class CalculateDiscount {
 //    크리스마스 디데이 할인
 //    이벤트 기간: 2023.12.1 ~ 2023.12.25
 //            1,000원으로 시작하여 크리스마스가 다가올수록 날마다 할인 금액이 100원씩 증가
@@ -25,7 +23,7 @@ public class calculateDiscount {
     private final Integer totalPrice;
     private final Day day;
     private final Week week;
-    public calculateDiscount(Integer date,List<MenuDetail> menuDetailList,Integer totalPrice){
+    public CalculateDiscount(Integer date, List<MenuDetail> menuDetailList, Integer totalPrice){
         this.date=date;
         this.menuDetailList=menuDetailList;
         this.totalPrice=totalPrice;
@@ -38,12 +36,23 @@ public class calculateDiscount {
         }
         return 0;
     }
-
-    public int calculateWeekdayWeekendsDiscount(){
+    public int calculateWeekdayDiscount(){
         if(week==Week.WEEKDAY){
             return calculateDessertNum()*2023;
         }
-        return calculateMainNum()*2023;
+        return 0;
+    }
+    public int calculateWeekendDiscount(){
+        if(week==Week.WEEKEND){
+            return calculateMainNum()*2023;
+        }
+        return 0;
+    }
+    public int calculateSpecialStarDiscount(){
+        if(date==25||day==Day.SUNDAY){
+            return 1000;
+        }
+        return 0;
     }
     public int calculateDessertNum(){
         int dessertNum=0;
