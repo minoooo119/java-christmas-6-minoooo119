@@ -4,10 +4,10 @@ public class Price {
     private final int originalTotalPrice;
     private final int finalPrice;
     private final int totalBenefitPrice;
-    public Price(int originalTotalPrice,int finalPrice,int totalBenefitPrice){
+    public Price(int originalTotalPrice,int totalBenefitPrice){
         this.originalTotalPrice=originalTotalPrice;
-        this.finalPrice=finalPrice;
         this.totalBenefitPrice=totalBenefitPrice;
+        this.finalPrice=originalTotalPrice-totalBenefitPrice;
     }
     public int getOriginalTotalPrice(){
         return originalTotalPrice;

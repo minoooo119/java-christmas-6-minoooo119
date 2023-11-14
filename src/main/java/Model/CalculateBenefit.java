@@ -13,14 +13,16 @@ public class CalculateBenefit {
     private final Integer totalPrice;
     private final Day day;
     private final Week week;
-    private Benefit benefit;
-    public CalculateBenefit(Integer date, List<MenuDetail> menuDetailList, Integer totalPrice,Benefit benefit){
+    private final Benefit benefit=new Benefit();
+    public CalculateBenefit(Integer date, List<MenuDetail> menuDetailList, Integer totalPrice){
         this.date=date;
         this.menuDetailList=menuDetailList;
         this.totalPrice=totalPrice;
         day=Day.findByDate(date);
         week=Week.findByDay(day);
-        this.benefit=benefit;
+    }
+    public Benefit getBenefit(){
+        return benefit;
     }
     public boolean calculateAllBenefit(){
         if(totalPrice>=10_000){
@@ -32,7 +34,16 @@ public class CalculateBenefit {
             benefit.setTotalBenefit();
             return benefit.getTotalBenefit()!=0;
         }
+        setBenefitZero();
         return false;
+    }
+    private void setBenefitZero(){
+        benefit.setD_dayBenefit(0);
+        benefit.setWeekdayBenefit(0);
+        benefit.setWeekendBenefit(0);
+        benefit.setSpecialStarBenefit(0);
+        benefit.setGiftBenefit(0);
+        benefit.setTotalBenefit();
     }
 
     private int calculateD_dayBenefit(){
