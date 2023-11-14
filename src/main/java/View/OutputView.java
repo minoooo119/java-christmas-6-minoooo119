@@ -1,6 +1,6 @@
 package View;
 
-import Model.CalculateDiscount;
+import Model.CalculateBenefit;
 import christmas.MenuDetail;
 
 import java.util.List;
@@ -12,12 +12,12 @@ public class OutputView {
     private final Integer date;
     private final List<MenuDetail> menuDetailList;
     private Integer originalTotalPrice;
-    CalculateDiscount calculateDiscount;
+    CalculateBenefit calculateDiscount;
     public OutputView(Integer date, List<MenuDetail> menuDetailList){
         this.date=date;
         this.menuDetailList=menuDetailList;
         setOriginalTotalPrice();
-        this.calculateDiscount=new CalculateDiscount(date,menuDetailList,getOriginalTotalPrice());
+        this.calculateDiscount=new CalculateBenefit(date,menuDetailList,getOriginalTotalPrice());
     }
     public void printBlankLine(){
         System.out.println();
@@ -72,39 +72,74 @@ public class OutputView {
         System.out.println("없음");
     }
     public void printDiscountDetails(){
-        if(calculateDiscount.calculateAllDiscount()){
-            printD_dayDiscount();
-            printWeekdayDiscount();
-            printWeekendDiscount();
-            printSpecialStarDiscount();
-            printGiftDiscount();
+        if(calculateDiscount.calculateAllBenefit()){
+            printD_dayBenefit();
+            printWeekdayBenefit();
+            printWeekendBenefit();
+            printSpecialStarBenefit();
+            printGiftBenefit();
             return;
         }
         System.out.println("없음");
     }
-    public void printD_dayDiscount(){
-        if(calculateDiscount.getD_dayDiscount()!=0){
-            System.out.printf(CHRISTMAS_D_DAY_DISCOUNT+"%n",calculateDiscount.getD_dayDiscount());
+    public void printTotalBenefitPrice(){
+        if(calculateDiscount.calculateAllBenefit()){
+            System.out.printf("-%,d원%n",calculateDiscount.getTotalBenefit());
+            return;
+        }
+        System.out.println("없음");
+    }
+    public void printFinalPrice(){
+        if(calculateDiscount.calculateAllBenefit()){
+            System.out.printf("%,d원%n",getOriginalTotalPrice()-calculateDiscount.getTotalBenefit());
+            return;
+        }
+        System.out.printf("%,d원%n",getOriginalTotalPrice());
+    }
+    public void printDecemberEventBadge(){
+        if(calculateDiscount.calculateAllBenefit()){
+            System.out.println(getBadge(calculateDiscount.getTotalBenefit()));
+            return;
+        }
+        System.out.println("없음");
+    }
+    public String getBadge(int price){
+        if(price>=5000&&price<10000){
+            return "별";
+        }
+        if(price>=10000&&price<20000){
+            return "트리";
+        }
+        if(price>=20000){
+            return "산타";
+        }
+        return "없음";
+
+    }
+
+    private void printD_dayBenefit(){
+        if(calculateDiscount.getD_dayBenefit()!=0){
+            System.out.printf(CHRISTMAS_D_DAY_DISCOUNT+"%n",calculateDiscount.getD_dayBenefit());
         }
     }
-    public void printWeekdayDiscount(){
-        if(calculateDiscount.getWeekdayDiscount()!=0){
-            System.out.printf(WEEKDAY_DISCOUNT+"%n",calculateDiscount.getWeekdayDiscount());
+    private void printWeekdayBenefit(){
+        if(calculateDiscount.getWeekdayBenefit()!=0){
+            System.out.printf(WEEKDAY_DISCOUNT+"%n",calculateDiscount.getWeekdayBenefit());
         }
     }
-    public void printWeekendDiscount(){
-        if(calculateDiscount.getWeekendDiscount()!=0){
-            System.out.printf(WEEKEND_DISCOUNT+"%n",calculateDiscount.getWeekendDiscount());
+    private void printWeekendBenefit(){
+        if(calculateDiscount.getWeekendBenefit()!=0){
+            System.out.printf(WEEKEND_DISCOUNT+"%n",calculateDiscount.getWeekendBenefit());
         }
     }
-    public void printSpecialStarDiscount(){
-        if(calculateDiscount.getSpecialStarDiscount()!=0){
-            System.out.printf(SPECIAL_STAR_DISCOUNT+"%n",calculateDiscount.getSpecialStarDiscount());
+    private void printSpecialStarBenefit(){
+        if(calculateDiscount.getSpecialStarBenefit()!=0){
+            System.out.printf(SPECIAL_STAR_DISCOUNT+"%n",calculateDiscount.getSpecialStarBenefit());
         }
     }
-    public void printGiftDiscount(){
-        if(calculateDiscount.getGiftDiscount()!=0){
-            System.out.printf(GIFT_EVENT_DISCOUNT+"%n",calculateDiscount.getGiftDiscount());
+    private void printGiftBenefit(){
+        if(calculateDiscount.getGiftBenefit()!=0){
+            System.out.printf(GIFT_EVENT_DISCOUNT+"%n",calculateDiscount.getGiftBenefit());
         }
     }
 }
