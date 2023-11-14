@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Week {
-    WEEKEND("주말", List.of(Day.FRIDAY,Day.SATURDAY, Day.SUNDAY)),
-    WEEKDAY("평일", List.of(Day.MONDAY, Day.TUESDAY, Day.WEDNESDAY, Day.THURSDAY));
+    WEEKEND("주말", List.of(Day.FRIDAY,Day.SATURDAY)),
+    WEEKDAY("평일", List.of(Day.MONDAY, Day.TUESDAY, Day.WEDNESDAY, Day.THURSDAY, Day.SUNDAY));
 
     private final String day;
     private final List<Day> days;
