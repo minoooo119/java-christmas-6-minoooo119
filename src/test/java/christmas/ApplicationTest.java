@@ -115,6 +115,29 @@ class ApplicationTest extends NsTest {
             assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         });
     }
+    @Test
+    void 날짜_관련_할인_테스트(){
+        assertSimpleTest(()->{
+            run("5","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("크리스마스 디데이 할인: 1,400원");
+        });
+        assertSimpleTest(()->{
+            run("5","티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("평일 할인: 4,046원");
+        });
+        assertSimpleTest(()->{
+            run("8","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("주말 할인: 6,069원");
+        });
+        assertSimpleTest(()->{
+            run("29","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("<혜택 내역>" + LINE_SEPARATOR+"주말 할인: 6,069원");
+        });
+        assertSimpleTest(()->{
+            run("25","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
+            assertThat(output()).contains("특별 할인: 1,000원");
+        });
+    }
 
     @Override
     protected void runMain() {
