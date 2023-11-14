@@ -9,4 +9,10 @@ public class OutputComment {
     public static final String TOTAL_BENEFIT_PRICE_TITLE="<총혜택 금액>";
     public static final String FINAL_PRICE_TITLE="<할인 후 예상 결제 금액>";
     public static final String DECEMBER_EVENT_BADGE_TITLE="<12월 이벤트 배지>";
+
+    public static final String CHRISTMAS_D_DAY_DISCOUNT="크리스마스 디데이 할인: %,d원";
+    public static final String WEEKDAY_DISCOUNT="평일 할인: %,d원";
+    public static final String WEEKEND_DISCOUNT="주말 할인: %,d원";
+    public static final String SPECIAL_STAR_DISCOUNT="특별 할인: %,d원";
+    public static final String GIFT_EVENT_DISCOUNT="증정 이벤트: %,d원";
 }
