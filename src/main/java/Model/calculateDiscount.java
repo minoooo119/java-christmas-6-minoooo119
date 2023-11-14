@@ -39,5 +39,29 @@ public class calculateDiscount {
         return 0;
     }
 
+    public int calculateWeekdayWeekendsDiscount(){
+        if(week==Week.WEEKDAY){
+            return calculateDessertNum()*2023;
+        }
+        return calculateMainNum()*2023;
+    }
+    public int calculateDessertNum(){
+        int dessertNum=0;
+        for(MenuDetail menuDetail:menuDetailList){
+            if(MenuGroup.findByMenuList(menuDetail)== MenuGroup.DESSERT){
+                dessertNum+=menuDetail.num;
+            }
+        }
+        return dessertNum;
+    }
+    public int calculateMainNum(){
+        int mainNum=0;
+        for(MenuDetail menuDetail:menuDetailList){
+            if(MenuGroup.findByMenuList(menuDetail)== MenuGroup.MAIN){
+                mainNum+=menuDetail.num;
+            }
+        }
+        return mainNum;
+    }
 
 }
