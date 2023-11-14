@@ -1,9 +1,6 @@
-package Model;
+package Model.Calculator;
 
-import christmas.Day;
-import christmas.MenuDetail;
-import christmas.MenuGroup;
-import christmas.Week;
+import Model.*;
 
 import java.util.List;
 

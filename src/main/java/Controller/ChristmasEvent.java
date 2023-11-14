@@ -1,11 +1,11 @@
 package Controller;
 
 import Model.Benefit;
-import Model.CalculateBenefit;
+import Model.Calculator.CalculateBenefit;
 import Model.Price;
 import View.InputView;
 import View.OutputView;
-import christmas.MenuDetail;
+import Model.MenuDetail;
 
 import java.util.List;
 

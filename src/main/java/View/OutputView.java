@@ -1,8 +1,6 @@
 package View;
 
-import Model.Benefit;
-import Model.CalculateBenefit;
-import christmas.MenuDetail;
+import Model.MenuDetail;
 
 import java.util.List;
 

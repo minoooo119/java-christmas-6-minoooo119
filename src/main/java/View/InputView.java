@@ -1,10 +1,9 @@
 package View;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.MenuDetail;
-import christmas.MenuGroup;
+import Model.MenuDetail;
+import Model.MenuGroup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
