@@ -13,51 +13,26 @@ public class CalculateBenefit {
     private final Integer totalPrice;
     private final Day day;
     private final Week week;
-    private int d_dayBenefit=0;
-    private int weekdayBenefit=0;
-    private int weekendBenefit=0;
-    private int specialStarBenefit=0;
-    private int giftBenefit=0;
-    private int totalBenefit=0;
-    public CalculateBenefit(Integer date, List<MenuDetail> menuDetailList, Integer totalPrice){
+    private Benefit benefit;
+    public CalculateBenefit(Integer date, List<MenuDetail> menuDetailList, Integer totalPrice,Benefit benefit){
         this.date=date;
         this.menuDetailList=menuDetailList;
         this.totalPrice=totalPrice;
         day=Day.findByDate(date);
         week=Week.findByDay(day);
+        this.benefit=benefit;
     }
     public boolean calculateAllBenefit(){
         if(totalPrice>=10_000){
-            d_dayBenefit=calculateD_dayBenefit();
-            weekdayBenefit=calculateWeekdayBenefit();
-            weekendBenefit=calculateWeekendBenefit();
-            specialStarBenefit=calculateSpecialStarBenefit();
-            giftBenefit=calculateGiftBenefit();
-            calculateTotalBenefit();
-            return totalBenefit!=0;
+            benefit.setD_dayBenefit(calculateD_dayBenefit());
+            benefit.setWeekdayBenefit(calculateWeekdayBenefit());
+            benefit.setWeekendBenefit(calculateWeekendBenefit());
+            benefit.setSpecialStarBenefit(calculateSpecialStarBenefit());
+            benefit.setGiftBenefit(calculateGiftBenefit());
+            benefit.setTotalBenefit();
+            return benefit.getTotalBenefit()!=0;
         }
         return false;
-    }
-    private void calculateTotalBenefit(){
-        totalBenefit=d_dayBenefit+weekdayBenefit+weekendBenefit+specialStarBenefit+giftBenefit;
-    }
-    public int getTotalBenefit(){
-        return totalBenefit;
-    }
-    public int getD_dayBenefit(){
-        return d_dayBenefit;
-    }
-    public int getWeekdayBenefit(){
-        return weekdayBenefit;
-    }
-    public int getWeekendBenefit(){
-        return weekendBenefit;
-    }
-    public int getSpecialStarBenefit(){
-        return specialStarBenefit;
-    }
-    public int getGiftBenefit(){
-        return giftBenefit;
     }
 
     private int calculateD_dayBenefit(){
