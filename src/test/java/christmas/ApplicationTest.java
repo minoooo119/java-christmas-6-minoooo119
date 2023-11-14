@@ -54,6 +54,13 @@ class ApplicationTest extends NsTest {
             assertThat(output()).contains("<혜택 내역>" + LINE_SEPARATOR + "없음");
         });
     }
+    @Test
+    void 총_혜택_출력(){
+        assertSimpleTest(() -> {
+            run("26", "타파스-1,제로콜라-1");
+            assertThat(output()).contains("<총혜택 금액>" + LINE_SEPARATOR + "없음");
+        });
+    }
 
     @Test
     void 날짜_예외_테스트() {
@@ -136,6 +143,10 @@ class ApplicationTest extends NsTest {
         assertSimpleTest(()->{
             run("25","티본스테이크-2,바비큐립-1,초코케이크-2,제로콜라-1");
             assertThat(output()).contains("특별 할인: 1,000원");
+        });
+        assertSimpleTest(()->{
+            run("25","아이스크림-1");
+            assertThat(output()).contains("<혜택 내역>" + LINE_SEPARATOR+"없음");
         });
     }
 
