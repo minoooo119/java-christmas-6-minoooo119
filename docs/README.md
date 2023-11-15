@@ -74,22 +74,22 @@ Day, Week는 할인 정보를 계산할 때 사용하였다.
 ---
 <h3>Controller Part</h3>
 ㄴController
-- View와 Model을 연결하는 클래스
-- View에서 입력 받은 정보를 Model에 전달한다.
-- Model에서 계산한 결과를 View에 전달한다.
-- View 내역에 맞게 메소드를 구현한다.
+  - View와 Model을 연결하는 클래스
+  - View에서 입력 받은 정보를 Model에 전달한다.
+  - Model에서 계산한 결과를 View에 전달한다.
+  - View 내역에 맞게 메소드를 구현한다.
 
 ---
 <h3>Exception Part</h3>
 ㄴIllegalArgumentException
-- View에서 입력 받은 정보를 검사하는 과정에서 발생하는 예외
-- View에서 입력 받은 정보가 유효하지 않을 경우 발생한다.
-- View에서 예외를 처리한다.
-- 예외 메시지를 출력하고 View에서 다시 입력을 받게 한다.
+  - View에서 입력 받은 정보를 검사하는 과정에서 발생하는 예외
+  - View에서 입력 받은 정보가 유효하지 않을 경우 발생한다.
+  - View에서 예외를 처리한다.
+  - 예외 메시지를 출력하고 View에서 다시 입력을 받게 한다.
 
 ---
 <h3>Application Part</h3>
 ㄴApplication
-- 프로그램을 실행하는 클래스
-- `main()` 메서드를 가지고 있다.
-- Controller 객체를 생성하여 프로그램을 실행한다.
+  - 프로그램을 실행하는 클래스
+  - `main()` 메서드를 가지고 있다.
+  - Controller 객체를 생성하여 프로그램을 실행한다.
