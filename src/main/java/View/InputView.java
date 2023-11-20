@@ -1,26 +1,29 @@
 package View;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.MenuDetail;
-import christmas.MenuGroup;
+import Model.MenuDetail;
+import Model.MenuGroup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InputView {
 
     private final List<MenuDetail> menuDetailList=new ArrayList<>();
+    private Integer date;
     public List<MenuDetail> getMenuDetailList(){
         return menuDetailList;
     }
-    public int readDate() {
+    public Integer getDate(){
+        return date;
+    }
+    public void readDate() {
         System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
         String input = Console.readLine();
         try {
-            return validateDate(validateConvertToInt(input));
+            date=validateDate(validateConvertToInt(input));
         } catch (IllegalArgumentException e) {
-            return readDate();
+            readDate();
         }
     }
     private Integer validateConvertToInt(String string) {
@@ -38,82 +41,83 @@ public class InputView {
         }
         return date;
     }
-    public List<MenuDetail> readMenu() {
+    public void readMenu() {
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         String menu=Console.readLine();
         try {
-            return validateMenu(menu);
+            validateMenu(menu);
         } catch (IllegalArgumentException e) {
-            return readMenu();
+            menuDetailList.clear();
+            readMenu();
         }
     }
-    public List<MenuDetail> validateMenu(String menu){
+    public void validateMenu(String menu){
         String[] menuList=menu.split(",");
         for(String menuDetail:menuList){
-            try {
-                validateMenuDetail(menuDetail);
-                if(!validateMenuLength(menuDetailList)){
-                    menuDetailList.clear();
-                    return readMenu();
-                }
-            }catch (IllegalArgumentException e){
-                return readMenu();
-            }
+            validateMenuDetail(menuDetail);
         }
-        return menuDetailList;
+        validateMenuLength(menuDetailList);
+        validateContainOnlyDrink();
     }
     private void validateMenuDetail(String menuDetail){
         String[] menuDetailListStr=menuDetail.split("-");
-        if(!validateMenuDetailLength(menuDetailListStr)){
+        try {
+            validateMenuDetailLength(menuDetailListStr);
+            validateMenuNum(menuDetailListStr[1]);
+            validateMenuName(menuDetailListStr[0]);
+            validateMenuOverlap(MenuDetail.findByName(menuDetailListStr[0]));
+            MenuDetail menu=MenuDetail.findByName(menuDetailListStr[0]);
+            menu.setNum(Integer.parseInt(menuDetailListStr[1]));
+            menuDetailList.add(menu);
+        }catch (IllegalArgumentException e){
             throw new IllegalArgumentException();
         }
-        if(!validateMenuName(menuDetailListStr[0])){
-            throw new IllegalArgumentException();
-        }
-        if(!validateMenuNum(menuDetailListStr[1])){
-            throw new IllegalArgumentException();
-        }
-        if(!validateMenuOverlap(MenuDetail.findByName(menuDetailListStr[0]))){
-            throw new IllegalArgumentException();
-        }
-        MenuDetail menu=MenuDetail.findByName(menuDetailListStr[0]);
-        menu.setNum(Integer.parseInt(menuDetailListStr[1]));
-        menuDetailList.add(menu);
     }
-    private boolean validateMenuLength(List<MenuDetail> menuDetailList){
+    //음료만 주문하는 것은 안됨
+    private void validateContainOnlyDrink(){
+        if(!validateContainMenuWithoutDrink()){
+            System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException();
+        }
+    }
+    private boolean validateContainMenuWithoutDrink(){
+        for (MenuDetail menuDetail:menuDetailList){
+            if(MenuGroup.findByMenuList(menuDetail)!=MenuGroup.DRINK){
+                return true;
+            }
+        }
+        return false;
+    }
+    private void validateMenuLength(List<MenuDetail> menuDetailList){
         int menuLength=0;
         for(MenuDetail menuDetail:menuDetailList){
             menuLength+=menuDetail.num;
         }
         if(menuLength>20){
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-            return false;
+            throw new IllegalArgumentException();
         }
-        return true;
     }
-    private boolean validateMenuOverlap(MenuDetail menuDetail){
+    private void validateMenuOverlap(MenuDetail menuDetail){
         if(menuDetailList.contains(menuDetail)){
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-            return false;
+            throw new IllegalArgumentException();
         }
-        return true;
     }
-    private boolean validateMenuDetailLength(String[] menuDetailList){
+    private void validateMenuDetailLength(String[] menuDetailList){
         if(menuDetailList.length!=2){
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-            return false;
+            throw new IllegalArgumentException();
         }
-        return true;
     }
-    private boolean validateMenuName(String menuName){
+    private void validateMenuName(String menuName){
         MenuDetail menuDetail=MenuDetail.findByName(menuName);
         if(menuDetail==MenuDetail.EMPTY){
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-            return false;
+            throw new IllegalArgumentException();
         }
-        return true;
     }
-    private boolean validateMenuNum(String menuNum){
+    private void validateMenuNum(String menuNum){
         try{
             int num=Integer.parseInt(menuNum);
             if(num<1){
@@ -124,6 +128,5 @@ public class InputView {
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             throw new IllegalArgumentException();
         }
-        return true;
     }
 }
